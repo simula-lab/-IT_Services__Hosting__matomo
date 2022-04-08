@@ -9,3 +9,5 @@ docker-compose -f ./docker-compose-first.yaml down
 ./create_cron_job.sh
 
 docker-compose -f ./docker-compose.yaml up -d
+
+cat .env
