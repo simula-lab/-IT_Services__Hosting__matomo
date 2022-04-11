@@ -21,7 +21,7 @@ services:
       - nginx
     command: >- 
              certonly --reinstall --webroot --webroot-path=/var/www/certbot
-             --email it@simulalab.org --agree-tos --no-eff-email
+             --email ${EMAIL} --agree-tos --no-eff-email
              -d ${DOMAIN}
     volumes:
       - ./etc/letsencrypt:/etc/letsencrypt
