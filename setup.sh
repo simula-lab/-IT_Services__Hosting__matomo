@@ -7,7 +7,7 @@ echo MARIADB_ROOT_PASSWORD=`openssl rand 30 | base64 -w 0` >> .env
 echo DOMAIN=$1 >> .env
 echo EMAIL=$2 >> .env
 
-docker-compose -f ./docker-compose-first.yaml up nginx -d
+docker-compose -f ./docker-compose-first.yaml up -d nginx
 docker-compose -f ./docker-compose-first.yaml up certbot
 docker-compose -f ./docker-compose-first.yaml down
 
