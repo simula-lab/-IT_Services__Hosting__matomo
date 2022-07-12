@@ -4,7 +4,7 @@ server {
     
     server_name $DOMAIN;
     
-    localtion ~/.well-known/acme-challenge {
+    location ~/.well-known/acme-challenge {
         allow all;
         root /var/www/certbot;
     }   
