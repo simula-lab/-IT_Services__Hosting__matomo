@@ -21,6 +21,4 @@
 # For more information see the manual pages of crontab(5) and cron(8)
 # 
 # m h  dom mon dow   command
-0 5  * * *  docker-compose -f /root/matomo/docker-compose.yaml up certbot 
-10 5 * * *  docker-compose -f /root/matomo/docker-compose.yaml exec nginx nginx -s reload
-# 10 5 * * *  docker-compose -f /root/matomo/docker-compose.yaml restart nginx
+0 5  * * * /root/matomo/cron_job.sh 
