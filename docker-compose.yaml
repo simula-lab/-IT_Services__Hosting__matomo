@@ -8,8 +8,8 @@ services:
     environment:
       - MARIADB_DATABASE=matomo
       - MARIADB_USER=matomo
-      - MARIADB_PASSWORD=
-      - MARIADB_ROOT_PASSWORD=
+      - MARIADB_PASSWORD=${MARIADB_PASSWORD}
+      - MARIADB_ROOT_PASSWORD=${MARIADB_ROOT_PASSWORD}
     volumes:
       - db:/var/lib/mysql
     networks:
@@ -34,7 +34,6 @@ services:
 networks:
   matomo:
   proxy:
-    external: true
     external: true
     name: http-proxy_proxy
 
