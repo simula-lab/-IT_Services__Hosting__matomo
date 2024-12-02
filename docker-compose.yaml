@@ -7,16 +7,16 @@ services:
     restart: always
     environment:
       - MARIADB_DATABASE=matomo
-      - MARIADB_USER
-      - MARIADB_PASSWORD
-      - MARIADB_ROOT_PASSWORD
+      - MARIADB_USER=matomo
+      - MARIADB_PASSWORD=
+      - MARIADB_ROOT_PASSWORD=
     volumes:
       - db:/var/lib/mysql
     networks:
       - matomo
 
   matomo:
-    image: matomo
+    image: matomo:${MATOMO_VERSION:-latest}
     container_name: matomo
     restart: always
     depends_on:
