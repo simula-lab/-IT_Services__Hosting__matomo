@@ -1,5 +1,4 @@
-version: "3"
-
+---
 services:
   db:
     image: mariadb 
@@ -12,7 +11,10 @@ services:
       - MARIADB_PASSWORD
       - MARIADB_ROOT_PASSWORD
     volumes:
-      - ./db:/var/lib/mysql
+      - db:/var/lib/mysql
+    networks:
+      - matomo
+
   matomo:
     image: matomo
     container_name: matomo
@@ -20,36 +22,22 @@ services:
     depends_on:
       - db
     volumes:
-      - ./matomo:/var/www/html
-        #    ports:
-        #- 8080:8080
-
-  nginx:
-    container_name: nginx
-    image: nginx:latest
-    restart: unless-stopped
-    environment:
-      - DOMAIN
-    depends_on:
+      - matomo:/var/www/html
+    networks:
       - matomo
-    ports:
-      - 80:80
-      - 443:443
-    volumes:
-      - ./etc/nginx/templates:/etc/nginx/templates:ro
-      - ./etc/letsencrypt:/etc/letsencrypt
-      - ./certbot/data:/var/www/certbot
-      - /var/log/nginx:/var/log/nginx
-  certbot:
-    container_name: certbot
-    image: certbot/certbot:latest
-    depends_on:
-      - nginx
-    command: >-
-             certonly --reinstall --webroot --webroot-path=/var/www/certbot
-             --email ${EMAIL} --agree-tos --no-eff-email
-             -d ${DOMAIN} 
-    volumes:
-      - ./etc/letsencrypt:/etc/letsencrypt
-      - ./certbot/data:/var/www/certbot
+      - proxy
+    environment:
+      - LETSENCRYPT_HOST=${DOMAIN}
+      - LETSENCRYPT_EMAIL=${EMAIL}
+      - VIRTUAL_HOST=${DOMAIN}
 
+networks:
+  matomo:
+  proxy:
+    external: true
+    external: true
+    name: http-proxy_proxy
+
+volumes:
+  matomo:
+  db:
